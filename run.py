@@ -4,31 +4,17 @@
 Date: 2015-03-07
 Authors: PythonJedi, jkwiedman"""
 
+# stdlib imports
 import time
+
+# project imports
+import lib.sdl2 as sdl2
+
 
 print("I'm alive!")
 
-## The following is just testing of ctypes module. It will be moved to lib.
-
-import ctypes
-
-class SDL_Window(ctypes.Structure):
-    _fields_ = []
-
-sdl2 = ctypes.CDLL("lib/SDL2.dll")
-
-sdl2.SDL_CreateWindow.restype = ctypes.POINTER(SDL_Window)
-sdl2.SDL_CreateWindow.argtypes = [ctypes.c_char_p,\
-                                  ctypes.c_int,\
-                                  ctypes.c_int,\
-                                  ctypes.c_int,\
-                                  ctypes.c_int,\
-                                  ctypes.c_uint]
-                                  
-sdl2.SDL_Init(0)
-
-sdl2.SDL_CreateWindow(b"Testing Window!", 100, 100, 640, 480, 0)
-
+sdl2.init(0)
+win = sdl2.Window("Testing sdl2 wrapper", (sdl2.WIN_CENTERED,)*2, (640, 480), 0)
 time.sleep(5)
-
-sdl2.SDL_Quit()
+del(win)
+sdl2.quit()
