@@ -10,6 +10,16 @@ WIN_CENTERED = 0x2FFF0000
 ## Structures ##
 class SDL_Window(Structure):
     _fields_ = []
+    
+class SDL_Point(Structure):
+    _fields_ = [("x", c_int),\
+                ("y", c_int)]
+                
+class SDL_Rect(Structure):
+    _fields_ = [("x", c_int),\
+                ("y", c_int),\
+                ("w", c_int),\
+                ("h", c_int)]
 
 ## ll_methods ##
 
