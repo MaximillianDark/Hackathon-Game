@@ -5,16 +5,32 @@ Date: 2015-03-07
 Authors: PythonJedi, jkwiedman"""
 
 # stdlib imports
-import time
+import time, os
 
 # project imports
-import lib.sdl2 as sdl2
+import src.gfx as gfx
+import src.event as event
+import lib.sdl2 as sdl2 # need event constants
 
+gfx.init()
 
-print("I'm alive!")
+win = gfx.Window("testing", (640, 480))
+ren = gfx.Renderer(win)
+tex = gfx.Texture(ren, "res\\game-tiles.bmp")
+rect = gfx.Rect(0, 0, 640, 480)
 
-sdl2.init(0)
-win = sdl2.Window("Testing sdl2 wrapper", (sdl2.WIN_CENTERED,)*2, (640, 480), 0)
-time.sleep(5)
+ren.render(tex, rect, rect)
+ren.present()
+running = True
+while running:
+    for e in event.get_events():
+        if e.type == sdl2.SDL_QUIT:
+            running = False
+            break
+
+del(rect)
+del(tex)
+del(ren)
 del(win)
-sdl2.quit()
+
+gfx.quit()
