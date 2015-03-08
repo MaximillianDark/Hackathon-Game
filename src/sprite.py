@@ -1,12 +1,12 @@
 """Sprite module for the project."""
     
-import gfx
+import src.gfx
 
 class Sprite:
     """Base sprite class for onscreen objects."""
-    def __init__(self, img, rect, groups=None):
-        self.img = img # string to reference sprite in spritesheet
-        self.rect = rect
+    def __init__(self, src, dest, groups=None):
+        self.src = src
+        self.dest = dest
         self.groups = []
         if groups:
             for g in groups:

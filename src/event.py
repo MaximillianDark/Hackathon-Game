@@ -14,3 +14,5 @@ class Event(sdl2.SDL_Event):
 def poll(e):
     return sdl2.SDL_PollEvent(byref(e))
     
+def push(e):
+    return sdl2.SDL_PushEvent(byref(e))

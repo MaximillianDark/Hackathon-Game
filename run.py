@@ -10,6 +10,8 @@ import time, os
 # project imports
 import src.gfx as gfx
 import src.event as event
+from res.res import SpriteSheet
+from src.entity import Seed
 import lib.sdl2 as sdl2 # need event constants
 
 def main():
@@ -17,11 +19,9 @@ def main():
 
     win = gfx.Window("testing", (640, 480))
     ren = gfx.Renderer(win)
-    tex = gfx.Texture(ren, "res\\game-tiles.bmp")
-    rect = gfx.Rect(0, 0, 640, 480)
+    sheet = SpriteSheet(gfx.Texture(ren, "res\\game-tiles.bmp"))
+    obj = Seed((100, 100), sheet)
 
-    ren.render(tex, rect, rect)
-    ren.present()
     running = True
     e = event.Event()
     while running:
@@ -29,9 +29,14 @@ def main():
             if e.type == sdl2.SDL_QUIT:
                 running = False
                 break
-
-    del(rect)
-    del(tex)
+        obj.update()
+        ren.clear()
+        obj.render(ren)
+        ren.present()
+        time.sleep(0.1)
+        
+    del(obj)
+    del(sheet)
     del(ren)
     del(win)
 

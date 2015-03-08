@@ -1,6 +1,7 @@
 """Spritesheet class for accessing subsections of the spritesheet."""
 
-from src.gfx import Rect
+from src.gfx import Rect, Texture
+import lib.sdl2 as sdl2 # importing gfx module first ensures sdl2 is loaded already
 
 SCALE = 32
 
@@ -66,9 +67,9 @@ class Platform:
 
             
     def __init__(self):
-        self.one_thick = OneThick()
-        self.two_thick = TwoThick()
-        self.three_thick = ThreeThick()
+        self.one_thick = Platform.OneThick()
+        self.two_thick = Platform.TwoThick()
+        self.three_thick = Platform.ThreeThick()
     
 class Player:
     class Walk:
@@ -86,8 +87,8 @@ class Player:
                 else:
                     raise IndexError("Invalid frame index")
         def __init__(self):
-            self.right = Right()
-            self.left = Left()
+            self.right = Player.Walk.Right()
+            self.left = Player.Walk.Left()
             
     class Stand:
         frames = (0, 1)
@@ -106,8 +107,8 @@ class Player:
                     raise IndexError("Invalid frame index")
                     
         def __init__(self):
-            self.right = Right()
-            self.left = Left()
+            self.right = Player.Stand.Right()
+            self.left = Player.Stand.Left()
         
     class Jump:
         frames = (0, 4, 5, 6, 0)
@@ -124,13 +125,13 @@ class Player:
                 else:
                     raise IndexError("Invalid frame index")
         def __init__(self): 
-            self.right = Right()
-            self.left = Left()
+            self.right = Player.Jump.Right()
+            self.left = Player.Jump.Left()
     
     def __init__(self):
-        self.walk = Walk()
-        self.stand = Stand()
-        self.jump = Jump()
+        self.walk = Player.Walk()
+        self.stand = Player.Stand()
+        self.jump = Player.Jump()
     
 class End:
     def __getitem__(self, index):
@@ -154,11 +155,14 @@ class Seed:
             raise IndexError("Invalid sprite reference, not in 0-2")
     
 class SpriteSheet:
-    def __init__(self):
+    def __init__(self, tex):
+        self.tex = tex
         self.player = Player()
         self.platform = Platform()
         self.end = End()
         self.seed = Seed()
         self.checkpoint = Checkpoint()
+        
+def load_level(filename):
+    pass
     
-sheet = SpriteSheet()

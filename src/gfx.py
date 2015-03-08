@@ -39,6 +39,8 @@ class Renderer:
         sdl2.SDL_RenderCopy(self._ren, tex._tex, src, dest)
     def present(self):
         sdl2.SDL_RenderPresent(self._ren)
+    def clear(self):
+        sdl2.SDL_RenderClear(self._ren)
 
 class Rect(sdl2.SDL_Rect):
     def __init__(self, *args):
