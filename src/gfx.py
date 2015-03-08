@@ -1,6 +1,7 @@
 """Wrapper around pysdl2, since that pythonic wrapper is confusing."""
 
 import os
+from ctypes import cast, POINTER, c_uint32, c_uint8, byref
 
 os.environ["PYSDL2_DLL_PATH"] = "lib\\"
 
@@ -11,6 +12,21 @@ def init(flags=0):
 
 def quit():
     sdl2.SDL_Quit()
+    
+def get_pix(surf, x, y):
+    Bpp = surf.format.contents.BytesPerPixel
+    pixs = cast(surf.pixels, POINTER(c_uint8))
+    addr = x*Bpp+y*surf.pitch
+    if sdl2.SDL_BYTEORDER == sdl2.SDL_LIL_ENDIAN:
+        pix = sum([pixs[addr+i]<<(8<<i) for i in range(Bpp)])
+    else: # endianess correc tfinding of an unknown number of bytes
+        pix = sum([pixs[addr+i]<<(8<<(Bpp-(i))) for i in range(Bpp)])
+    r = c_uint8(0)
+    g = c_uint8(0)
+    b = c_uint8(0)
+    print(pix)
+    sdl2.SDL_GetRGB(c_uint32(pix), surf.format, r, g, b)
+    return r.value, g.value, b.value
 
 class Window:   
     """Wrap the relevant functions in pysdl2 to implement windows."""

@@ -10,16 +10,18 @@ import time, os
 # project imports
 import src.gfx as gfx
 import src.event as event
-from res.res import SpriteSheet
+import res.res as res
 from src.entity import Seed
 import lib.sdl2 as sdl2 # need event constants
 
 def main():
     gfx.init()
+    
+    res.load_level("res\\Test-Level.bmp")
 
     win = gfx.Window("testing", (640, 480))
     ren = gfx.Renderer(win)
-    sheet = SpriteSheet(gfx.Texture(ren, "res\\game-tiles.bmp"))
+    sheet = res.SpriteSheet(gfx.Texture(ren, "res\\game-tiles.bmp"))
     obj = Seed((100, 100), sheet)
 
     running = True

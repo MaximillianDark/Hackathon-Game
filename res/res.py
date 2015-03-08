@@ -1,6 +1,6 @@
 """Spritesheet class for accessing subsections of the spritesheet."""
 
-from src.gfx import Rect, Texture
+from src.gfx import Rect, Texture, get_pix
 from src.sprite import Group
 from src.tile import Tile
 import lib.sdl2 as sdl2 # importing gfx module first ensures sdl2 is loaded already
@@ -168,4 +168,8 @@ class SpriteSheet:
 def load_level(filename):
     lev = Group()
     surf = sdl2.SDL_LoadBMP(bytes(filename, "UTF-8"))
-    
+    for y in range(surf.contents.h):
+        for x in range(surf.contents.w):
+            p = get_pix(surf.contents, x, y)
+            print(str((x, y))+": "+str(p))
+    sdl2.SDL_FreeSurface(surf)
