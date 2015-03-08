@@ -22,8 +22,9 @@ rect = gfx.Rect(0, 0, 640, 480)
 ren.render(tex, rect, rect)
 ren.present()
 running = True
+e = event.Event()
 while running:
-    for e in event.get_events():
+    while event.poll(e):
         if e.type == sdl2.SDL_QUIT:
             running = False
             break

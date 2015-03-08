@@ -3,9 +3,14 @@
 import lib.sdl2 as sdl2
 from ctypes import byref
 
-def get_events():
-    events = []
-    e = sdl2.SDL_Event()
-    while sdl2.SDL_PollEvent(byref(e)):
-        events.append(e)
-    return events
+class Event(sdl2.SDL_Event):
+    def __init__(self, *args):
+        super(Event, self).__init__(*args)
+    def __getattribute__(self, name):
+        return getattr(super(Event, self), name)
+    def __setattribute__(self, name, val):
+        return setattr(super(Event, self), name, val)
+
+def poll(e):
+    return sdl2.SDL_PollEvent(byref(e))
+    
