@@ -18,6 +18,12 @@ class Sprite:
         if group in self.groups:
             self.groups.remove(group)
     
+    def update(self, *args):
+        pass
+        
+    def render(self, renderer):
+        pass
+    
     def kill(self):
         for g in self.groups:
             g.remove(self)
@@ -41,3 +47,11 @@ class Group:
         if sprite in self.spritelist:
             self.spritelist.remove(sprite)
             sprite._remove(self)
+            
+    def update(self, *args):
+        for sprite in self.spritelist:
+            sprite.update(*args)
+    
+    def render(self, renderer):
+        for sprite in self.spritelist:
+            sprite.render(renderer)
