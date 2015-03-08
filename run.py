@@ -22,11 +22,11 @@ def main():
     sheet = res.SpriteSheet(gfx.Texture(ren, "res\\game-tiles.bmp"))
     
     lev, start, seeds = res.load_level("res\\Test-Level.bmp", sheet)
-    print(lev)
+    """print(lev)
     print()
     print(start)
     print()
-    print(seeds)
+    print(seeds)"""
     
     obj = Seed(sheet, (100, 100))
 

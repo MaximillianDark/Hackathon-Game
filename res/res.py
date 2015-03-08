@@ -177,9 +177,11 @@ def load_level(filename, sheet):
     surf_p = sdl2.SDL_LoadBMP(bytes(filename, "UTF-8"))
     surf = surf_p.contents
     for y in range(surf.h):
+        print(y)
         for x in range(surf.w):
+            print(x)
             p = get_pix(surf, x, y)
-            print(str((x, y))+": "+str(p))
+            print(p)
             if p == TILE:
                 # need to see the surrounding tiles
                 src = "" # part of what I will pass to tile constructor
@@ -223,7 +225,7 @@ def load_level(filename, sheet):
                 lev.add(Tile(sheet, src, _tile2rect((x, y))))
             elif p == SEED:
                 pos = _tile2rect((x, y))
-                print(str((pos.x//100, pos.y//100))+": "+str(p))
+                print(str((pos.x//SCALE, pos.y//SCALE))+": "+str(p))
                 s = Seed_e(sheet, (pos.x, pos.y))
                 seeds.add(s)
             elif p == START:

@@ -3,6 +3,8 @@
 import os
 from ctypes import cast, POINTER, c_uint32, c_uint8, byref
 
+import math
+
 os.environ["PYSDL2_DLL_PATH"] = "lib\\"
 
 import lib.sdl2 as sdl2
@@ -18,10 +20,12 @@ def get_pix(surf, x, y):
     pixs = cast(surf.pixels, POINTER(c_uint32))
     addr = (x+y*surf.pitch)//4
     pix = pixs[addr]
+    print(bin(pix))
     r = c_uint8(0)
     g = c_uint8(0)
     b = c_uint8(0)
-    sdl2.SDL_GetRGB(c_uint32(pix), surf.format, r, g, b)
+    a = c_uint8(0)
+    sdl2.SDL_GetRGBA(c_uint32(pix), surf.format, r, g, b, a)
     return r.value, g.value, b.value
 
 class Window:   
