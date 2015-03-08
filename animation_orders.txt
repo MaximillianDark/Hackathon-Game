@@ -11,3 +11,20 @@ Starting points for tiles(x= to the right, y=down)
 6:             193,161
 7:             193,193
 
+
+seed:
+start 1, 97
+
+checkpoint 1, 129
+
+end point:
+97, 97
+
+1 height platform
+1,1
+
+2 heigh platform
+1,33
+
+3+ height platform
+97,1
