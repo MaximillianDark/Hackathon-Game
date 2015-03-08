@@ -43,6 +43,11 @@ class Group:
         if self not in sprite.groups:
             sprite._add(self)
     
+    def append(self, other):
+        """Add other group's sprites to this group."""
+        for s in other.spritelist:
+            self.add(s)
+    
     def remove(self, sprite):
         if sprite in self.spritelist:
             self.spritelist.remove(sprite)

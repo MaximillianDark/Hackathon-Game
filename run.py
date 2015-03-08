@@ -13,7 +13,14 @@ import src.event as event
 import res.res as res
 from src.entity import Seed
 from src.controller import Controller
+from src.camera import Camera
+from src.sprite import Group
 import lib.sdl2 as sdl2 # need event constants
+
+FPS = 30.0
+
+SPF = 1/FPS
+
 
 def main():
     gfx.init()
@@ -25,31 +32,34 @@ def main():
     sheet = res.SpriteSheet(gfx.Texture(ren, "res\\game-tiles.bmp"))
     
     lev, start, seeds = res.load_level("res\\Test-Level.txt", sheet)
-    print(lev)
-    print()
-    print(start)
-    print()
-    print(seeds)
     
-    obj = Seed(sheet, (100, 100))
+    cam = Camera((start.x, start.y), sheet)
+    
+    world = Group()
+    world.append(lev)
+    world.append(seeds)
 
     running = True
     e = event.Event()
     while running:
+        start = time.time()
         while event.poll(e):
             if e.type == sdl2.SDL_QUIT:
                 running = False
                 break
             elif e.type in (sdl2.SDL_KEYDOWN, sdl2.SDL_KEYUP):
-                controller.update(e)
-        
-        obj.update()
+                controller.update(e)    
+        cam.update(controller)
         ren.clear()
-        obj.render(ren)
+        cam.render(ren, world)
         ren.present()
-        time.sleep(0.1)
+        end = time.time()
+        diff = end-start
+        if diff < SPF:
+            time.sleep(SPF-diff)
         
-    del(obj)
+        
+    del(world)
     del(sheet)
     del(ren)
     del(win)

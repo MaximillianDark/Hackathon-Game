@@ -228,7 +228,6 @@ def load_level(filename, sheet):
                 lev.add(Tile(sheet, src, _tile2rect((x, y))))
             elif p == SEED:
                 pos = _tile2rect((x, y))
-                print(str((pos.x//SCALE, pos.y//SCALE))+": "+str(p))
                 s = Seed_e(sheet, (pos.x, pos.y))
                 seeds.add(s)
             elif p == START:
