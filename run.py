@@ -12,21 +12,24 @@ import src.gfx as gfx
 import src.event as event
 import res.res as res
 from src.entity import Seed
+from src.controller import Controller
 import lib.sdl2 as sdl2 # need event constants
 
 def main():
     gfx.init()
+    
+    controller = Controller((sdl2.SDLK_w, sdl2.SDLK_s, sdl2.SDLK_a, sdl2.SDLK_d))
 
     win = gfx.Window("testing", (640, 480))
     ren = gfx.Renderer(win)
     sheet = res.SpriteSheet(gfx.Texture(ren, "res\\game-tiles.bmp"))
     
-    lev, start, seeds = res.load_level("res\\Test-Level.bmp", sheet)
-    """print(lev)
+    lev, start, seeds = res.load_level("res\\Test-Level.txt", sheet)
+    print(lev)
     print()
     print(start)
     print()
-    print(seeds)"""
+    print(seeds)
     
     obj = Seed(sheet, (100, 100))
 
@@ -37,6 +40,9 @@ def main():
             if e.type == sdl2.SDL_QUIT:
                 running = False
                 break
+            elif e.type in (sdl2.SDL_KEYDOWN, sdl2.SDL_KEYUP):
+                controller.update(e)
+        
         obj.update()
         ren.clear()
         obj.render(ren)

@@ -1,6 +1,6 @@
 """Spritesheet class for accessing subsections of the spritesheet."""
 
-from src.gfx import Rect, Texture, get_pix
+from src.gfx import Rect, Texture
 from src.sprite import Group
 from src.tile import Tile
 from src.entity import Seed as Seed_e
@@ -166,54 +166,57 @@ class SpriteSheet:
         self.seed = Seed()
         self.checkpoint = Checkpoint()
         
+def read_level(file):   
+    return [l for l in file]
+    
+        
 def load_level(filename, sheet):
-    TILE = (0, 0, 0)
-    END = (0, 0, 255)
-    START = (255, 0, 0)
-    SEED = (0, 0, 255)
+    TILE = "t"
+    END = "e"
+    START = "s"
+    SEED = "p"
     lev = Group()
     seeds = Group()
     start = None
-    surf_p = sdl2.SDL_LoadBMP(bytes(filename, "UTF-8"))
-    surf = surf_p.contents
-    for y in range(surf.h):
-        print(y)
-        for x in range(surf.w):
-            print(x)
-            p = get_pix(surf, x, y)
-            print(p)
+    f = open(filename, newline="")
+    d = read_level(f)
+    f.close()
+    
+    for y in range(len(d)):
+        for x in range(len(d[y])):
+            p = d[y][x]
             if p == TILE:
                 # need to see the surrounding tiles
                 src = "" # part of what I will pass to tile constructor
                 
                 # check horizontal tiles
-                if x == surf.w: # right side, left tile
+                if x == len(d[y])-1: # right side, left tile
                     src = "l "
                 elif x == 0: # left side, right tile
                     src = "r "
-                elif get_pix(surf, x-1, y)==TILE: # tile on left
-                    if get_pix(surf, x+1, y)==TILE: # tile on right
+                elif d[y][x-1]==TILE: # tile on left
+                    if d[y][x+1]==TILE: # tile on right
                         src = "c " # horizontal center tile
                     else: # only tile on left
                         src = "r " # right tile
-                elif get_pix(surf, x+1, y)==TILE: # only tile on right
+                elif d[y][x+1]==TILE: # only tile on right
                     src = "l " # left tile
                 else: # no tile either side
                     src = "c " # until I actually have a hoizontal center tile
                 
                 # check vertical tiles
-                if y == surf.h: # bottom of map, upper tile
+                if y == len(d)-1: # bottom of map, upper tile
                     src = src[0]+"t"
                 elif y == 0: # top of map, lower tile
                     src = src[0]+"l"
-                elif get_pix(surf, x, y-1) == TILE: # tile above
-                    if get_pix(surf, x, y+1) == TILE: # tile below
+                elif d[y-1][x] == TILE: # tile above
+                    if d[y+1][x] == TILE: # tile below
                         # vertical center tile
                         src = src[0]+"c"
                     else: # only tile above
                         #lower tile
                         src = src[0]+"l"
-                elif get_pix(surf, x, y+1): # only tile below
+                elif d[y+1][x]: # only tile below
                     # upper tile
                     src = src[0] + "t"
                 else: # no tiles on top or bottom
@@ -230,5 +233,4 @@ def load_level(filename, sheet):
                 seeds.add(s)
             elif p == START:
                 start = _tile2rect((x, y))
-    sdl2.SDL_FreeSurface(surf)
     return lev, start, seeds

@@ -14,19 +14,6 @@ def init(flags=0):
 
 def quit():
     sdl2.SDL_Quit()
-    
-def get_pix(surf, x, y):
-    Bpp = surf.format.contents.BytesPerPixel
-    pixs = cast(surf.pixels, POINTER(c_uint32))
-    addr = (x+y*surf.pitch)//4
-    pix = pixs[addr]
-    print(bin(pix))
-    r = c_uint8(0)
-    g = c_uint8(0)
-    b = c_uint8(0)
-    a = c_uint8(0)
-    sdl2.SDL_GetRGBA(c_uint32(pix), surf.format, r, g, b, a)
-    return r.value, g.value, b.value
 
 class Window:   
     """Wrap the relevant functions in pysdl2 to implement windows."""
