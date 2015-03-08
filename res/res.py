@@ -1,6 +1,8 @@
 """Spritesheet class for accessing subsections of the spritesheet."""
 
 from src.gfx import Rect, Texture
+from src.sprite import Group
+from src.tile import Tile
 import lib.sdl2 as sdl2 # importing gfx module first ensures sdl2 is loaded already
 
 SCALE = 32
@@ -164,5 +166,6 @@ class SpriteSheet:
         self.checkpoint = Checkpoint()
         
 def load_level(filename):
-    pass
+    lev = Group()
+    surf = sdl2.SDL_LoadBMP(bytes(filename, "UTF-8"))
     
