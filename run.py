@@ -16,13 +16,19 @@ import lib.sdl2 as sdl2 # need event constants
 
 def main():
     gfx.init()
-    
-    res.load_level("res\\Test-Level.bmp")
 
     win = gfx.Window("testing", (640, 480))
     ren = gfx.Renderer(win)
     sheet = res.SpriteSheet(gfx.Texture(ren, "res\\game-tiles.bmp"))
-    obj = Seed((100, 100), sheet)
+    
+    lev, start, seeds = res.load_level("res\\Test-Level.bmp", sheet)
+    print(lev)
+    print()
+    print(start)
+    print()
+    print(seeds)
+    
+    obj = Seed(sheet, (100, 100))
 
     running = True
     e = event.Event()

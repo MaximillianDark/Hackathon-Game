@@ -33,7 +33,7 @@ class Entity(Sprite):
         
 class Seed(Entity):
     frames = (0, 1, 0, 2)
-    def __init__(self, pos, sheet, groups=None):
+    def __init__(self, sheet, pos, groups=None):
         self.sheet = sheet
         src = self.sheet.seed[0]
         super(Seed, self).__init__(src, Rect(pos[0], pos[1], src.w, src.h), groups)

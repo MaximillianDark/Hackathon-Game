@@ -55,3 +55,6 @@ class Group:
     def render(self, renderer):
         for sprite in self.spritelist:
             sprite.render(renderer)
+            
+    def __str__(self):
+        return str(self.spritelist)
