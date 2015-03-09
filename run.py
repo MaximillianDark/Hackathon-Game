@@ -61,7 +61,7 @@ def main():
         
         
     del(world)
-    del(sheet)
+    del(sprite_rects)
     del(ren)
     del(win)
 
