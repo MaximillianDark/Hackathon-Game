@@ -29,11 +29,11 @@ def main():
 
     win = gfx.Window("testing", (640, 480))
     ren = gfx.Renderer(win)
-    sheet = res.SpriteSheet(gfx.Texture(ren, "res\\game-tiles.bmp"))
+    sprite_rects = res.SpriteSheet()
     
-    lev, start, seeds = res.load_level("res\\Test-Level.txt", sheet)
+    lev, start, seeds = res.load_level("res\\Test-Level.txt", sprite_rects)
     
-    cam = Camera((start.x, start.y), sheet)
+    cam = Camera((start.x, start.y), gfx.Texture(ren, "res\\game-tiles.bmp"), ren)
     
     world = Group()
     world.append(lev)
@@ -50,8 +50,9 @@ def main():
             elif e.type in (sdl2.SDL_KEYDOWN, sdl2.SDL_KEYUP):
                 controller.update(e)    
         cam.update(controller)
+        world.update()
         ren.clear()
-        cam.render(ren, world)
+        cam.render_all(world)
         ren.present()
         end = time.time()
         diff = end-start

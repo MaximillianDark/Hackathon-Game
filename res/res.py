@@ -158,8 +158,7 @@ class Seed:
             raise IndexError("Invalid sprite reference, not in 0-2")
     
 class SpriteSheet:
-    def __init__(self, tex):
-        self.tex = tex
+    def __init__(self):
         self.player = Player()
         self.platform = Platform()
         self.end = End()

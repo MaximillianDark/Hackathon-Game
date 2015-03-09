@@ -8,9 +8,10 @@ from src.sprite import Sprite
 from src.gfx import Rect
 
 class Camera(Sprite):
-    """Camera class."""
-    def __init__(self, startpos, sheet):
+    """Camera class implements the transition between game space and screen."""
+    def __init__(self, startpos, sheet, renderer):
         self.sheet = sheet
+        self.renderer = renderer
         self.src = Rect(startpos[0], startpos[1], 640, 480)
         self.dest = Rect(0, 0, 640, 480)
         super(Camera, self).__init__(self.src, self.dest)
@@ -26,8 +27,11 @@ class Camera(Sprite):
         elif controller.keys["d"]:
             self.src.x += 8
             
-    def render(self, renderer, world):
+    def render(self, src, dest):
+        transrect = Rect(dest.x-self.src.x, dest.y-self.src.y, dest.w, dest.h)
+        self.renderer.render(self.sheet, src, transrect)
+            
+    def render_all(self, world):
         for sprite in world.spritelist:
             if sdl2.SDL_HasIntersection(byref(self.src), byref(sprite.dest)):
-                transrect = Rect(sprite.dest.x-self.src.x, sprite.dest.y-sprite.dest.y, sprite.dest.w, sprite.dest.h)
-                renderer.render(self.sheet.tex, sprite.src, transrect)
+                sprite.render(self)

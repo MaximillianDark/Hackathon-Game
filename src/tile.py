@@ -16,4 +16,4 @@ class Tile(Sprite):
         pass
     
     def render(self, renderer):
-        renderer.render(self.sheet.tex, self.src, self.dest)
+        renderer.render(self.src, self.dest)
