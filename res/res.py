@@ -3,7 +3,7 @@
 from src.gfx import Rect, Texture
 from src.sprite import Group
 from src.tile import Tile
-from src.entity import Seed as Seed_e
+import src.entity as entity
 import lib.sdl2 as sdl2 # importing gfx module first ensures sdl2 is loaded already
 
 SCALE = 32
@@ -177,6 +177,7 @@ def load_level(filename, sheet):
     lev = Group()
     seeds = Group()
     start = None
+    end = None
     f = open(filename, newline="")
     d = read_level(f)
     f.close()
@@ -227,8 +228,13 @@ def load_level(filename, sheet):
                 lev.add(Tile(sheet, src, _tile2rect((x, y))))
             elif p == SEED:
                 pos = _tile2rect((x, y))
-                s = Seed_e(sheet, (pos.x, pos.y))
+                s = entity.Seed(sheet, (pos.x, pos.y))
                 seeds.add(s)
             elif p == START:
-                start = _tile2rect((x, y))
-    return lev, start, seeds
+                start = _tile2rect((x, y))  
+            elif p == END:
+
+                pos = _tile2rect((x, y))
+                end = entity.End(sheet, (pos.x, pos.y))
+                
+    return lev, start, end, seeds

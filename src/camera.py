@@ -17,7 +17,6 @@ class Camera(Sprite):
         super(Camera, self).__init__(self.src, self.dest)
         
     def update(self, controller):
-        print((self.src.x, self.src.y))
         if controller.keys["w"] == True:
             self.src.y -= 8
         elif controller.keys["s"]:

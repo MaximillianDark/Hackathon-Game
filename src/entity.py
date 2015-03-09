@@ -39,9 +39,23 @@ class Seed(Entity):
         super(Seed, self).__init__(src, Rect(pos[0], pos[1], src.w, src.h), groups)
         self.state = 0
     def update(self, *args):
-        self.state += 1
+        self.state += 0.1
         self.state %= len(Seed.frames)
-        self.src = self.sheet.seed[Seed.frames[self.state]]
+        self.src = self.sheet.seed[Seed.frames[int(self.state)]]
         
+    def render(self, renderer):
+        renderer.render(self.src, self.dest)
+        
+class End(Entity):
+    frames = (0, 1, 2, 1)
+    def __init__(self, sheet, pos, groups=None):
+        self.sheet = sheet
+        src = self.sheet.end[0]
+        super(End, self).__init__(src, Rect(pos[0], pos[1], src.w, src.h), groups)
+        self.state = 0
+    def update(self, *args):
+        self.state += 0.1
+        self.state %= len(End.frames)
+        self.src = self.sheet.end[End.frames[int(self.state)]]
     def render(self, renderer):
         renderer.render(self.src, self.dest)

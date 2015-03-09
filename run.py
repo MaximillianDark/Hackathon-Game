@@ -31,13 +31,15 @@ def main():
     ren = gfx.Renderer(win)
     sprite_rects = res.SpriteSheet()
     
-    lev, start, seeds = res.load_level("res\\Test-Level.txt", sprite_rects)
+    lev, start, end, seeds = res.load_level("res\\Test-Level.txt", sprite_rects)
     
     cam = Camera((start.x, start.y), gfx.Texture(ren, "res\\game-tiles.bmp"), ren)
     
     world = Group()
     world.append(lev)
     world.append(seeds)
+    if end:
+        world.add(end)
 
     running = True
     e = event.Event()
