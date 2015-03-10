@@ -29,7 +29,7 @@ class Texture:
     """Pythonic wrapper for SDL's textures"""
     def __init__(self, renderer, filename):
         surf = sdl2.SDL_LoadBMP(bytes(filename ,"UTF-8"))
-        sdl2.SDL_SetColorKey(surf, 1, sdl2.SDL_MapRGBA(surf.contents.format, 255, 6, 0, 255)) ## TODO: fix magic color value/colorkeying in general
+        sdl2.SDL_SetColorKey(surf, 1, sdl2.SDL_MapRGB(surf.contents.format, 255, 0, 0)) ## TODO: fix magic color value/colorkeying in general
         self._tex = sdl2.SDL_CreateTextureFromSurface(renderer._ren, surf)
         sdl2.SDL_FreeSurface(surf)
     def __del__(self):
