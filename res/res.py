@@ -11,10 +11,6 @@ def read_level(file):
     return [l for l in file]
     
 def load_level(filename, sheet):
-    TILE = "t"
-    END = "e"
-    START = "s"
-    SEED = "p"
     lev = Group()
     seeds = Group()
     start = None
@@ -26,20 +22,18 @@ def load_level(filename, sheet):
     for y in range(len(d)):
         for x in range(len(d[y])):
             p = d[y][x]
-            if p == TILE:
+            if _tile_type(p) == "Platform":
                 src = _tile_find((x, y), d, sheet)
                 lev.add(Tile(sheet, src, tile2rect((x, y))))
-            elif p == SEED:
+            elif _tile_type(p) == "Seed":
                 pos = tile2rect((x, y))
                 s = entity.Seed(sheet, (pos.x, pos.y))
                 seeds.add(s)
-            elif p == START:
+            elif _tile_type(p) == "Start":
                 start = tile2rect((x, y))  
-            elif p == END:
-
+            elif _tile_type(p) == "End":
                 pos = tile2rect((x, y))
                 end = entity.End(sheet, (pos.x, pos.y))
-                
     return lev, start, end, seeds
     
 def _tile_type(data):

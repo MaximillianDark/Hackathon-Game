@@ -44,3 +44,4 @@ Temporary Items
 
 # compiled python files
 *.pyc
+**/__pycache__/**
