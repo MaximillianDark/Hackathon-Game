@@ -14,7 +14,7 @@ import res.res as res
 from src.entity import Seed
 from src.controller import Controller
 from src.camera import Camera
-from src.sprite import Group
+from src.sprite import Group, Sheet
 import lib.sdl2 as sdl2 # need event constants
 
 FPS = 30.0
@@ -29,7 +29,7 @@ def main():
 
     win = gfx.Window("testing", (640, 480))
     ren = gfx.Renderer(win)
-    sprite_rects = res.SpriteSheet()
+    sprite_rects = Sheet()
     
     lev, start, end, seeds = res.load_level("res\\Test-Level.txt", sprite_rects)
     
