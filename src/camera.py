@@ -10,9 +10,13 @@ from src.gfx import Rect
 class Camera(Sprite):
     """Camera class implements the transition between game space and screen."""
     def __init__(self, startpos, sheet, renderer):
+        """
+        
+        startpos is the center of the camera's viewrect in gamespace."""
         self.sheet = sheet
         self.renderer = renderer
-        self.src = Rect(startpos[0], startpos[1], 640, 480)
+        self.src = Rect(0, 0, 640, 480)
+        self.src.center = startpos
         self.dest = Rect(0, 0, 640, 480)
         super(Camera, self).__init__(self.src, self.dest)
         

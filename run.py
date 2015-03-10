@@ -33,7 +33,13 @@ def main():
     
     lev, start, end, seeds = res.load_level("res\\Test-Level.txt", sprite_rects)
     
-    cam = Camera((start.x, start.y), gfx.Texture(ren, "res\\game-tiles.bmp"), ren)
+    print("start.center")
+    print(start.center)
+    
+    cam = Camera(start.center, gfx.Texture(ren, "res\\game-tiles.bmp"), ren)
+    
+    print("cam.src.center")
+    print(cam.src.center)
     
     world = Group()
     world.append(lev)
