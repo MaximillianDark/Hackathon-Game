@@ -1,6 +1,5 @@
 """Sprite module for the project."""
     
-import src.gfx
 from src.util import *
 
 class Sprite:
@@ -28,6 +27,9 @@ class Sprite:
     def kill(self):
         for g in self.groups:
             g.remove(self)
+            
+    def intersects(self, other):
+        return self.dest.intersects(other.dest)
     
         
 class Group:
@@ -61,6 +63,8 @@ class Group:
     def render(self, renderer):
         for sprite in self.spritelist:
             sprite.render(renderer)
+    def collide_with(self, other):
+        return [sprite for sprite in self.spritelist if sprite.intersects(other)]
             
     def __str__(self):
         return str(self.spritelist)
@@ -185,3 +189,4 @@ class Sheet:
         self.end = End()
         self.seed = Seed()
         self.checkpoint = Checkpoint()
+        

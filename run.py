@@ -31,19 +31,14 @@ def main():
     ren = gfx.Renderer(win)
     sprite_rects = Sheet()
     
-    lev, start, end, seeds = res.load_level("res\\Test-Level.txt", sprite_rects)
-    
-    print("start.center")
-    print(start.center)
+    lev, start, end, seeds, checkpoints = res.load_level("res\\Test-Level.txt", sprite_rects)
     
     cam = Camera(start.center, gfx.Texture(ren, "res\\game-tiles.bmp"), ren)
-    
-    print("cam.src.center")
-    print(cam.src.center)
     
     world = Group()
     world.append(lev)
     world.append(seeds)
+    world.append(checkpoints)
     if end:
         world.add(end)
 

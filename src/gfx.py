@@ -93,3 +93,11 @@ class Rect(sdl2.SDL_Rect):
             set("y", val - get("h"))
         else:
             raise AttributeError(name+" is not a valid Rect attribute")
+    def intersects(other):
+        if not isinstance(other, Rect):
+            raise TypeError("trying to intersect rect with non rect "+str(other))
+        if sdl2.SDL_HasIntersection(self, other) == sdl2.SDL_TRUE:
+            return True
+        else:
+            return False
+            

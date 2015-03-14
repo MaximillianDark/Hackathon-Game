@@ -22,13 +22,13 @@ class Camera(Sprite):
         
     def update(self, controller):
         if controller.keys["w"] == True:
-            self.src.y -= 8
+            self.src.y -= 16
         elif controller.keys["s"]:
-            self.src.y += 8
+            self.src.y += 16
         if controller.keys["a"]:
-            self.src.x -= 8
+            self.src.x -= 16
         elif controller.keys["d"]:
-            self.src.x += 8
+            self.src.x += 16
             
     def render(self, src, dest):
         transrect = Rect(dest.x-self.src.x, dest.y-self.src.y, dest.w, dest.h)

@@ -13,6 +13,7 @@ def read_level(file):
 def load_level(filename, sheet):
     lev = Group()
     seeds = Group()
+    checkpoints = Group()
     start = None
     end = None
     f = open(filename, newline="")
@@ -27,14 +28,16 @@ def load_level(filename, sheet):
                 lev.add(Tile(sheet, src, tile2rect((x, y))))
             elif _tile_type(p) == "Seed":
                 pos = tile2rect((x, y))
-                s = entity.Seed(sheet, (pos.x, pos.y))
-                seeds.add(s)
+                seeds.add(entity.Seed(sheet, (pos.x, pos.y)))
             elif _tile_type(p) == "Start":
                 start = tile2rect((x, y))  
             elif _tile_type(p) == "End":
                 pos = tile2rect((x, y))
                 end = entity.End(sheet, (pos.x, pos.y))
-    return lev, start, end, seeds
+            elif _tile_type(p) == "Checkpoint":
+                pos = tile2rect((x, y))
+                checkpoints.add(entity.Checkpoint(sheet, (pos.x, pos.y)))
+    return lev, start, end, seeds, checkpoints
     
 def _tile_type(data):
     if data == "t":
@@ -45,6 +48,8 @@ def _tile_type(data):
         return "End"
     elif data == "p":
         return "Seed"
+    elif data == "c":
+        return "Checkpoint"
     else:
         return ""
     
